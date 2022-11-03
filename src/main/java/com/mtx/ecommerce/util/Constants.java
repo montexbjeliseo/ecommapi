@@ -42,6 +42,8 @@ public class Constants {
     }
 
     public static abstract class Patterns {
-
+        public static final String FIRSTNAME_PATTERN = "^[a-zA-Z][ a-zA-Z]*$";
+        public static final String LASTNAME_PATTERN = "^[a-zA-Z][ a-zA-Z]*$";
+        public static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–{}:;',?/*~$^+=<>]).{8,20}$";
     }
 }
