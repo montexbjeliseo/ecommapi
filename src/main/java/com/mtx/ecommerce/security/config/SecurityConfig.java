@@ -5,9 +5,12 @@ import com.mtx.ecommerce.exception.auth.handler.CustomAuthenticationEntryPoint;
 import com.mtx.ecommerce.security.filter.JwtRequestFilter;
 import com.mtx.ecommerce.security.service.impl.UserDetailsServiceImpl;
 import com.mtx.ecommerce.util.Constants.Endpoints;
+import com.sendgrid.SendGrid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,6 +24,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@PropertySource("classpath:application.properties")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -83,5 +87,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationEntryPoint authenticationEntryPoint() {
         return new CustomAuthenticationEntryPoint();
+    }
+    
+    @Bean
+    @Value("${sendgrid.api.key}")
+    public SendGrid sendGridClient(String sendGridAPIKey){
+        return new SendGrid(sendGridAPIKey);
+    }
+    @Bean
+    @Value("${sendgrid.email}")
+    public String sendGridEmail(String email){
+        return email;
     }
 }

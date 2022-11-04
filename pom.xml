@@ -79,6 +79,12 @@
             <version>6.1.2.Final</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>com.sendgrid</groupId>
+            <artifactId>sendgrid-java</artifactId>
+            <version>4.1.2</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>

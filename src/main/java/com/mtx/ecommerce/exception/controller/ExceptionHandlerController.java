@@ -110,7 +110,7 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
     }
-    
+
     @ExceptionHandler(value = {AuthenticationException.class})
     protected ResponseEntity<?> handleException(AuthenticationException ex,
             WebRequest request) {
@@ -122,5 +122,5 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
     }
-    
+
 }

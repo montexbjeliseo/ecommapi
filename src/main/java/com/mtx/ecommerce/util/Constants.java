@@ -67,4 +67,13 @@ public class Constants {
         public static final String AUTHORIZATION = "Authorization";
         public static final String BEARER = "Bearer ";
     }
+
+    public static abstract class Emailer {
+
+        public static final String TEMPLATE_PATH = "src/main/resources/templates/";
+        public static final String MAIL_SEND = "mail/send";
+        public static final String HTML_TYPE = "text/html";
+        public static final String WELCOME_SUBJECT = "Bienvenido a Ecommapi";
+        public static final String WELCOME_TEMPLATE_PATH = TEMPLATE_PATH + "welcome.html";
+    }
 }
