@@ -13,8 +13,11 @@ import com.mtx.ecommerce.security.repository.RoleRepository;
 import com.mtx.ecommerce.security.repository.UserRepository;
 import com.mtx.ecommerce.security.service.IAuthService;
 import com.mtx.ecommerce.security.service.IJwtService;
+import com.mtx.ecommerce.service.IEmailService;
 import com.mtx.ecommerce.util.Constants.Messages.AuthMessages;
 import com.mtx.ecommerce.util.Constants.Roles;
+import com.sendgrid.Response;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import javax.transaction.Transactional;
@@ -51,8 +54,11 @@ public class AuthServiceImpl implements IAuthService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private IEmailService emailService;
+
     @Override
-    public RegisteredUserDto register(UserRegisterDto dto) {
+    public RegisteredUserDto register(UserRegisterDto dto) throws IOException {
         if (userRepository.existsByEmail(dto.getEmail())) {
             throw new AlreadyExistsEmailException(AuthMessages.ALREADY_EXISTS_EMAIL);
         }
@@ -62,6 +68,7 @@ public class AuthServiceImpl implements IAuthService {
         User saved = userRepository.save(user);
         RegisteredUserDto response = userMapper.toRegisteredDto(saved);
         response.setJwtToken(jwtService.generateToken(saved));
+        Response mailResponse = emailService.sendWelcome(saved.getEmail());
         return response;
 
     }
