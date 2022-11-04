@@ -22,9 +22,7 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    //@Column(nullable = false)
-    //@NotNull(message = "Name may not be null")
+    
     private String name;
 
     private String description;

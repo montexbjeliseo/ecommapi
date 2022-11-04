@@ -17,6 +17,8 @@ public class Constants {
         public static final String AUTH = ROOT + "/auth";
         public static final String REGISTER = "/register";
         public static final String REGISTER_PATH = AUTH + REGISTER;
+        public static final String LOGIN = "/login";
+        public static final String LOGIN_PATH = AUTH + LOGIN;
     }
 
     public static abstract class Tables {
@@ -27,8 +29,9 @@ public class Constants {
         public static final String USER_ID = "user_id";
         public static final String ROLE_ID = "role_id";
     }
-    
+
     public static abstract class DefaultData {
+
         public static final String ADMIN_EMAIL = "admin@myecommerce.com";
         public static final String USER_EMAIL = "user@myecommerce.com";
     }
@@ -37,11 +40,22 @@ public class Constants {
 
         public static abstract class AuthMessages {
 
-            public static final String AlreadyExistsEmail = "Already exists email";
+            public static final String ALREADY_EXISTS_EMAIL = "Already exists email";
+            public static final String USERNAME_NOT_FOUND = "Username not found";
+        }
+
+        public static abstract class Validations {
+
+            public static final String FIRSTNAME_MESSAGE = "Firstname cannot contain numbers or special characters";
+            public static final String LASTNAME_MESSAGE = "Lastname cannot contain numbers or special characters";
+            public static final String PASSWORD_MESSAGE = "Password must be between 8 and 20 characters and must contain at least one uppercase letter, one special character and one number";
+            public static final String EMAIL_MESSAGE = "Email is required";
+
         }
     }
 
     public static abstract class Patterns {
+
         public static final String FIRSTNAME_PATTERN = "^[a-zA-Z][ a-zA-Z]*$";
         public static final String LASTNAME_PATTERN = "^[a-zA-Z][ a-zA-Z]*$";
         public static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–{}:;',?/*~$^+=<>]).{8,20}$";
