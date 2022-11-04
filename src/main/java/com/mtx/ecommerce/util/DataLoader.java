@@ -11,12 +11,14 @@ import static com.mtx.ecommerce.util.Constants.Roles.ADMIN_DESCRIPTION;
 import static com.mtx.ecommerce.util.Constants.Roles.USER;
 import static com.mtx.ecommerce.util.Constants.Roles.USER_DESCRIPTION;
 import java.util.HashSet;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
+@Transactional
 public class DataLoader implements CommandLineRunner {
 
     @Autowired
@@ -30,8 +32,12 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        checkRoles();
-        checkUsers();
+        try {
+            checkRoles();
+            checkUsers();
+        } catch (Exception ex) {
+            System.out.println("Something went wront: " + ex.toString());
+        }
     }
 
     private void checkRoles() {
