@@ -1,6 +1,7 @@
 package com.mtx.ecommerce.security.service.impl;
 
 import com.mtx.ecommerce.security.service.IJwtService;
+import static com.mtx.ecommerce.util.Constants.Filter.JWT_TOKEN_VALIDITY;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -17,8 +18,6 @@ import java.util.stream.Collectors;
 public class JwtServiceImpl implements IJwtService {
   // LLAVE_MUY_SECRETA => [Base64] => TExBVkVfTVVZX1NFQ1JFVEE=
   private static final String JWT_SECRET_KEY = "RV9jb21tZXJjZV9rZXlfZXhhbXBsZQ==";
-
-  public static final long JWT_TOKEN_VALIDITY = 1000 * 60 * 60 * (long) 8; // 8 Horas
 
   public String extractUsername(String token) {
     return extractClaim(token, Claims::getSubject);

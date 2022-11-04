@@ -66,6 +66,7 @@ public class Constants {
 
         public static final String AUTHORIZATION = "Authorization";
         public static final String BEARER = "Bearer ";
+        public static final long JWT_TOKEN_VALIDITY = 1000 * 60 * 60 * (long) 8; // 8 Horas
     }
 
     public static abstract class Emailer {
