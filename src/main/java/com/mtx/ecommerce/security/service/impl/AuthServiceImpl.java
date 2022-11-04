@@ -5,6 +5,7 @@ import com.mtx.ecommerce.security.dto.request.UserLoginDto;
 import com.mtx.ecommerce.security.dto.request.UserRegisterDto;
 import com.mtx.ecommerce.security.dto.response.RegisteredUserDto;
 import com.mtx.ecommerce.security.dto.response.TokenInfo;
+import com.mtx.ecommerce.security.dto.response.UserInfoDto;
 import com.mtx.ecommerce.security.mapper.UserMapper;
 import com.mtx.ecommerce.security.model.Role;
 import com.mtx.ecommerce.security.model.User;
@@ -22,6 +23,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -48,7 +50,7 @@ public class AuthServiceImpl implements IAuthService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-    
+
     @Override
     public RegisteredUserDto register(UserRegisterDto dto) {
         if (userRepository.existsByEmail(dto.getEmail())) {
@@ -77,6 +79,13 @@ public class AuthServiceImpl implements IAuthService {
         } catch (BadCredentialsException ex) {
             throw ex;
         }
+    }
+
+    @Override
+    public UserInfoDto userInfo() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(auth.getName()).get();
+        return userMapper.toInfoDto(user);
     }
 
     private Set<Role> getDefaultRoles() {

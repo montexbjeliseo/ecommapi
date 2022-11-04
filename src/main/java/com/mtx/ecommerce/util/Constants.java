@@ -19,6 +19,7 @@ public class Constants {
         public static final String REGISTER_PATH = AUTH + REGISTER;
         public static final String LOGIN = "/login";
         public static final String LOGIN_PATH = AUTH + LOGIN;
+        public static final String ME = "/me";
     }
 
     public static abstract class Tables {
@@ -59,5 +60,11 @@ public class Constants {
         public static final String FIRSTNAME_PATTERN = "^[a-zA-Z][ a-zA-Z]*$";
         public static final String LASTNAME_PATTERN = "^[a-zA-Z][ a-zA-Z]*$";
         public static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–{}:;',?/*~$^+=<>]).{8,20}$";
+    }
+
+    public static abstract class Filter {
+
+        public static final String AUTHORIZATION = "Authorization";
+        public static final String BEARER = "Bearer ";
     }
 }
