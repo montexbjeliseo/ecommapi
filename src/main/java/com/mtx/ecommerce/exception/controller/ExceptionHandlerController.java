@@ -2,6 +2,7 @@ package com.mtx.ecommerce.exception.controller;
 
 import com.mtx.ecommerce.exception.auth.AlreadyExistsEmailException;
 import com.mtx.ecommerce.exception.dto.ExceptionDto;
+import io.jsonwebtoken.JwtException;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -24,9 +26,9 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-                                                                  HttpHeaders headers,
-                                                                  HttpStatus status,
-                                                                  WebRequest request) {
+            HttpHeaders headers,
+            HttpStatus status,
+            WebRequest request) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
 
@@ -36,7 +38,7 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
         });
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
-    
+
     @ExceptionHandler(value = {AlreadyExistsEmailException.class})
     protected ResponseEntity<?> handleException(AlreadyExistsEmailException ex,
             WebRequest request) {
@@ -97,5 +99,28 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(value = {JwtException.class})
+    protected ResponseEntity<?> handleException(JwtException ex,
+            WebRequest request) {
+        ExceptionDto message = new ExceptionDto(
+                HttpStatus.UNAUTHORIZED.value(),
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false));
+
+        return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
+    }
+    
+    @ExceptionHandler(value = {AuthenticationException.class})
+    protected ResponseEntity<?> handleException(AuthenticationException ex,
+            WebRequest request) {
+        ExceptionDto message = new ExceptionDto(
+                HttpStatus.UNAUTHORIZED.value(),
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false));
+
+        return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
+    }
     
 }
