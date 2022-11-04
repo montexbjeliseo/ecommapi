@@ -1,8 +1,10 @@
 package com.mtx.ecommerce.security.controller;
 
+import com.mtx.ecommerce.security.dto.request.UserLoginDto;
 import com.mtx.ecommerce.security.dto.request.UserRegisterDto;
 import com.mtx.ecommerce.security.service.IAuthService;
 import com.mtx.ecommerce.util.Constants.Endpoints;
+import java.io.IOException;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,11 +17,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(Endpoints.AUTH)
 public class AuthController {
+
     @Autowired
     private IAuthService authService;
-    
+
     @PostMapping(Endpoints.REGISTER)
-    public ResponseEntity<?> register(@Valid @RequestBody UserRegisterDto dto){
+    public ResponseEntity<?> register(@Valid @RequestBody UserRegisterDto dto) throws IOException {
         return new ResponseEntity<>(authService.register(dto), HttpStatus.OK);
+    }
+
+    @PostMapping(Endpoints.LOGIN)
+    public ResponseEntity<?> login(@Valid @RequestBody UserLoginDto dto) throws IOException {
+        return new ResponseEntity<>(authService.login(dto), HttpStatus.OK);
     }
 }

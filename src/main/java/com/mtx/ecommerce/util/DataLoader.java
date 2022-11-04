@@ -31,7 +31,7 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         checkRoles();
-        //checkUsers();
+        checkUsers();
     }
 
     private void checkRoles() {
@@ -57,7 +57,7 @@ public class DataLoader implements CommandLineRunner {
             user.setRoles(new HashSet<>());
             user.getRoles().add(roleRepository.findByName(ADMIN).get());
             user.setEmail(ADMIN_EMAIL);
-            user.setPassword(bcrypt.encode("1234"));
+            user.setPassword(bcrypt.encode("Admin@1234"));
             userRepository.save(user);
         }
         if (!userRepository.existsByEmail(USER)) {
@@ -67,7 +67,7 @@ public class DataLoader implements CommandLineRunner {
             user.setRoles(new HashSet<>());
             user.getRoles().add(roleRepository.findByName(USER).get());
             user.setEmail(USER_EMAIL);
-            user.setPassword(bcrypt.encode("1234"));
+            user.setPassword(bcrypt.encode("User@1234"));
             userRepository.save(user);
         }
     }
