@@ -14,10 +14,8 @@ import com.mtx.ecommerce.repository.BrandRepository;
 import com.mtx.ecommerce.repository.CategoryRepository;
 import com.mtx.ecommerce.repository.ProductRepository;
 import com.mtx.ecommerce.service.IProductService;
-import java.util.Objects;
+import java.util.List;
 import java.util.Optional;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,11 +72,11 @@ public class ProductServiceImpl implements IProductService {
         if (!productRepository.existsById(id)) {
             throw new ResourceNotFoundException("Product not found");
         }
-        
+
         if (productRepository.existsNameAndBrandDuplicatedProductIdCustomQuery(id, dto.getName(), dto.getBrand_id())) {
             throw new DuplicatedResourceException("Already exists a product with the same name and brand");
         }
-        
+
         Product product = productRepository.findById(id).get();
         product = productMapper.update(dto, product);
         if (dto.getBrand_id() != null) {
@@ -97,7 +95,7 @@ public class ProductServiceImpl implements IProductService {
             throw new ResourceNotFoundException("Category not found with id: " + id);
         }
         product.setCategory(category.get());
-        
+
         return product;
     }
 
@@ -110,4 +108,10 @@ public class ProductServiceImpl implements IProductService {
 
         return product;
     }
+
+    @Override
+    public List<RegisteredProductDto> getAll() {
+        return productMapper.toDtoList(productRepository.findAll());
+    }
+
 }
