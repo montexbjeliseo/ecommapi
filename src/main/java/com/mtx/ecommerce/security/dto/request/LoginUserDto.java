@@ -4,19 +4,17 @@ import static com.mtx.ecommerce.util.Constants.Messages.Validations.EMAIL_MESSAG
 import static com.mtx.ecommerce.util.Constants.Messages.Validations.PASSWORD_MESSAGE;
 import static com.mtx.ecommerce.util.Constants.Patterns.PASSWORD_PATTERN;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-@NoArgsConstructor
-public class UserLoginDto {
+@Data
+public class LoginUserDto {
 
+    @NotBlank
     @Email(message = EMAIL_MESSAGE)
     private String username;
-
+    @NotBlank
     @Pattern(regexp = PASSWORD_PATTERN, message = PASSWORD_MESSAGE)
     private String password;
 }

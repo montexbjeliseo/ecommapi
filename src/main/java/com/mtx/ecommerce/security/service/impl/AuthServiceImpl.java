@@ -1,8 +1,8 @@
 package com.mtx.ecommerce.security.service.impl;
 
 import com.mtx.ecommerce.exception.auth.AlreadyExistsEmailException;
-import com.mtx.ecommerce.security.dto.request.UserLoginDto;
-import com.mtx.ecommerce.security.dto.request.UserRegisterDto;
+import com.mtx.ecommerce.security.dto.request.LoginUserDto;
+import com.mtx.ecommerce.security.dto.request.RegisterUserDto;
 import com.mtx.ecommerce.security.dto.response.RegisteredUserDto;
 import com.mtx.ecommerce.security.dto.response.TokenInfo;
 import com.mtx.ecommerce.security.dto.response.UserInfoDto;
@@ -58,7 +58,7 @@ public class AuthServiceImpl implements IAuthService {
     private IEmailService emailService;
 
     @Override
-    public RegisteredUserDto register(UserRegisterDto dto) throws IOException {
+    public RegisteredUserDto register(RegisterUserDto dto) throws IOException {
         if (userRepository.existsByEmail(dto.getEmail())) {
             throw new AlreadyExistsEmailException(AuthMessages.ALREADY_EXISTS_EMAIL);
         }
@@ -74,7 +74,7 @@ public class AuthServiceImpl implements IAuthService {
     }
 
     @Override
-    public TokenInfo login(UserLoginDto dto) {
+    public TokenInfo login(LoginUserDto dto) {
         if (!userRepository.existsByEmail(dto.getUsername())) {
             throw new UsernameNotFoundException(AuthMessages.USERNAME_NOT_FOUND);
         }

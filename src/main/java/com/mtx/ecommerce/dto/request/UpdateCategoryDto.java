@@ -6,14 +6,10 @@ import javax.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
-public class ProductRegisterDto {
+public class UpdateCategoryDto {
 
     @Pattern(regexp = NAME_PATTERN)
     private String name;
     @Pattern(regexp = DESCRIPTION_PATTERN)
     private String description;
-    private String image;
-    private float price;
-    private Long category_id;
-    private Long brand_id;
 }
