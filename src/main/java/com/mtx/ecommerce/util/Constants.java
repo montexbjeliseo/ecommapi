@@ -20,6 +20,9 @@ public class Constants {
         public static final String LOGIN = "/login";
         public static final String LOGIN_PATH = AUTH + LOGIN;
         public static final String ME = "/me";
+        public static final String PRODUCT = ROOT + "/products";
+        public static final String CATEGORY = ROOT + "/categories";
+        public static final String BRAND = ROOT + "/brands";
     }
 
     public static abstract class Tables {
@@ -29,6 +32,12 @@ public class Constants {
         public static final String USERS_ROLES = USERS + "_" + ROLES;
         public static final String USER_ID = "user_id";
         public static final String ROLE_ID = "role_id";
+        public static final String PRODUCTS = "products";
+        public static final String PRODUCT_IMAGES = "product_images";
+        public static final String CATEGORIES = "categories";
+        public static final String CATEGORY_ID = "category_id";
+        public static final String BRANDS = "brands";
+        public static final String BRAND_ID = "brand_id";
     }
 
     public static abstract class DefaultData {
