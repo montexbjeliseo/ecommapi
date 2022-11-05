@@ -18,17 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(Endpoints.CATEGORY)
 public class CategoryController {
-    
+
     @Autowired
     private ICategoryService categoryService;
-    
+
     @PostMapping
-    public ResponseEntity<?> save(@Valid @RequestBody RegisterCategoryDto dto){
+    public ResponseEntity<?> save(@Valid @RequestBody RegisterCategoryDto dto) {
         return new ResponseEntity<>(categoryService.save(dto), HttpStatus.OK);
     }
-    
+
     @PatchMapping(Endpoints.ID)
-    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody UpdateCategoryDto dto){
+    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody UpdateCategoryDto dto) {
         return new ResponseEntity<>(categoryService.update(id, dto), HttpStatus.OK);
     }
 }
