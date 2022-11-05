@@ -97,7 +97,7 @@ public class AuthServiceImpl implements IAuthService {
 
     private Set<Role> getDefaultRoles() {
         Set<Role> roles = new HashSet<>();
-        roles.add(roleRepository.findByName(Roles.ADMIN).get());
+        roles.add(roleRepository.findByName(Roles.USER).get());
         return roles;
     }
 }

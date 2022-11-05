@@ -5,9 +5,12 @@ import com.mtx.ecommerce.security.model.User;
 import com.mtx.ecommerce.security.repository.RoleRepository;
 import com.mtx.ecommerce.security.repository.UserRepository;
 import static com.mtx.ecommerce.util.Constants.DefaultData.ADMIN_EMAIL;
+import static com.mtx.ecommerce.util.Constants.DefaultData.SELLER_EMAIL;
 import static com.mtx.ecommerce.util.Constants.DefaultData.USER_EMAIL;
 import static com.mtx.ecommerce.util.Constants.Roles.ADMIN;
 import static com.mtx.ecommerce.util.Constants.Roles.ADMIN_DESCRIPTION;
+import static com.mtx.ecommerce.util.Constants.Roles.SELLER;
+import static com.mtx.ecommerce.util.Constants.Roles.SELLER_DESCRIPTION;
 import static com.mtx.ecommerce.util.Constants.Roles.USER;
 import static com.mtx.ecommerce.util.Constants.Roles.USER_DESCRIPTION;
 import java.util.HashSet;
@@ -53,10 +56,16 @@ public class DataLoader implements CommandLineRunner {
             user.setDescription(USER_DESCRIPTION);
             roleRepository.save(user);
         }
+        if (!roleRepository.existsByName(SELLER)) {
+            Role user = new Role();
+            user.setName(SELLER);
+            user.setDescription(SELLER_DESCRIPTION);
+            roleRepository.save(user);
+        }
     }
 
     private void checkUsers() {
-        if (!userRepository.existsByEmail(ADMIN)) {
+        if (!userRepository.existsByEmail(ADMIN_EMAIL)) {
             User user = new User();
             user.setFirstName(ADMIN);
             user.setLastName(ADMIN);
@@ -66,7 +75,7 @@ public class DataLoader implements CommandLineRunner {
             user.setPassword(bcrypt.encode("Admin@1234"));
             userRepository.save(user);
         }
-        if (!userRepository.existsByEmail(USER)) {
+        if (!userRepository.existsByEmail(USER_EMAIL)) {
             User user = new User();
             user.setFirstName(USER);
             user.setLastName(USER);
@@ -74,6 +83,16 @@ public class DataLoader implements CommandLineRunner {
             user.getRoles().add(roleRepository.findByName(USER).get());
             user.setEmail(USER_EMAIL);
             user.setPassword(bcrypt.encode("User@1234"));
+            userRepository.save(user);
+        }
+        if (!userRepository.existsByEmail(SELLER_EMAIL)) {
+            User user = new User();
+            user.setFirstName(SELLER);
+            user.setLastName(SELLER);
+            user.setRoles(new HashSet<>());
+            user.getRoles().add(roleRepository.findByName(SELLER).get());
+            user.setEmail(SELLER_EMAIL);
+            user.setPassword(bcrypt.encode("Seller@1234"));
             userRepository.save(user);
         }
     }
