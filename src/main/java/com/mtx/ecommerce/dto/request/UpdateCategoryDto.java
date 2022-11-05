@@ -6,7 +6,7 @@ import javax.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
-public class CategoryRegisterDto {
+public class UpdateCategoryDto {
 
     @Pattern(regexp = NAME_PATTERN)
     private String name;

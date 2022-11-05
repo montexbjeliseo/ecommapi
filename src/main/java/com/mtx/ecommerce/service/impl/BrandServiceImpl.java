@@ -4,6 +4,7 @@ import com.mtx.ecommerce.dto.request.RegisterBrandDto;
 import com.mtx.ecommerce.dto.request.UpdateBrandDto;
 import com.mtx.ecommerce.dto.response.RegisteredBrandDto;
 import com.mtx.ecommerce.exception.DuplicatedResourceException;
+import com.mtx.ecommerce.exception.ParameterNotFoundException;
 import com.mtx.ecommerce.exception.ResourceNotFoundException;
 import com.mtx.ecommerce.mapper.BrandMapper;
 import com.mtx.ecommerce.model.Brand;
@@ -37,6 +38,11 @@ public class BrandServiceImpl implements IBrandService {
 
     @Override
     public RegisteredBrandDto update(Long id, UpdateBrandDto dto) {
+        
+        if (dto.getName()==null && dto.getDescription()==null) {
+            throw new ParameterNotFoundException("No parameters were received!");
+        }
+        
         if (!brandRepository.existsById(id)) {
             throw new ResourceNotFoundException("Brand not found");
         }
