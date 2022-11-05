@@ -30,6 +30,8 @@ public class Constants {
 
     public static abstract class Tables {
 
+        public static final String ID = "id";
+        public static final String NAME = "name";
         public static final String USERS = "users";
         public static final String ROLES = "roles";
         public static final String USERS_ROLES = USERS + "_" + ROLES;
@@ -91,5 +93,11 @@ public class Constants {
         public static final String HTML_TYPE = "text/html";
         public static final String WELCOME_SUBJECT = "Bienvenido a Ecommapi";
         public static final String WELCOME_TEMPLATE_PATH = TEMPLATE_PATH + "welcome.html";
+    }
+
+    public static abstract class CustomQueries {
+
+        public static final String EXISTS_DUPLICATED_NAME_BRAND_PRODUCT = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM Product p WHERE (p.name = :name AND p.brand.id = :brand_id)";
+        public static final String EXISTS_DUPLICATED_NAME_BRAND_PRODUCT_ID = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM Product p WHERE NOT(p.id = :id) AND (p.name = :name AND p.brand.id = :brand_id)";
     }
 }
