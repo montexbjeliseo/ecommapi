@@ -10,6 +10,7 @@ import com.mtx.ecommerce.mapper.BrandMapper;
 import com.mtx.ecommerce.model.Brand;
 import com.mtx.ecommerce.repository.BrandRepository;
 import com.mtx.ecommerce.service.IBrandService;
+import java.util.List;
 import java.util.Objects;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +39,11 @@ public class BrandServiceImpl implements IBrandService {
 
     @Override
     public RegisteredBrandDto update(Long id, UpdateBrandDto dto) {
-        
-        if (dto.getName()==null && dto.getDescription()==null) {
+
+        if (dto.getName() == null && dto.getDescription() == null) {
             throw new ParameterNotFoundException("No parameters were received!");
         }
-        
+
         if (!brandRepository.existsById(id)) {
             throw new ResourceNotFoundException("Brand not found");
         }
@@ -60,5 +61,9 @@ public class BrandServiceImpl implements IBrandService {
 
         return brandMapper.toRegisteredDto(saved);
 
+    }
+
+    public List<RegisteredBrandDto> getAll() {
+        return brandMapper.toDtoList(brandRepository.findAll());
     }
 }
