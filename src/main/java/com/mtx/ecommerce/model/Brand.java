@@ -16,6 +16,7 @@ import lombok.Data;
 @Table(name = BRANDS)
 @Data
 public class Brand {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -9,13 +9,9 @@ import static com.mtx.ecommerce.util.Constants.Patterns.LASTNAME_PATTERN;
 import static com.mtx.ecommerce.util.Constants.Patterns.PASSWORD_PATTERN;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class UserRegisterDto {
 
     @Pattern(regexp = FIRSTNAME_PATTERN, message = FIRSTNAME_MESSAGE)
