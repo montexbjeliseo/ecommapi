@@ -1,7 +1,7 @@
 package com.mtx.ecommerce.security.controller;
 
-import com.mtx.ecommerce.security.dto.request.UserLoginDto;
-import com.mtx.ecommerce.security.dto.request.UserRegisterDto;
+import com.mtx.ecommerce.security.dto.request.LoginUserDto;
+import com.mtx.ecommerce.security.dto.request.RegisterUserDto;
 import com.mtx.ecommerce.security.service.IAuthService;
 import com.mtx.ecommerce.util.Constants.Endpoints;
 import java.io.IOException;
@@ -23,12 +23,12 @@ public class AuthController {
     private IAuthService authService;
 
     @PostMapping(Endpoints.REGISTER)
-    public ResponseEntity<?> register(@Valid @RequestBody UserRegisterDto dto) throws IOException {
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterUserDto dto) throws IOException {
         return new ResponseEntity<>(authService.register(dto), HttpStatus.OK);
     }
 
     @PostMapping(Endpoints.LOGIN)
-    public ResponseEntity<?> login(@Valid @RequestBody UserLoginDto dto) throws IOException {
+    public ResponseEntity<?> login(@Valid @RequestBody LoginUserDto dto) throws IOException {
         return new ResponseEntity<>(authService.login(dto), HttpStatus.OK);
     }
 
