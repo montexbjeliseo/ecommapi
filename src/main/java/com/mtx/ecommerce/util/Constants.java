@@ -22,6 +22,7 @@ public class Constants {
         public static final String LOGIN = "/login";
         public static final String LOGIN_PATH = AUTH + LOGIN;
         public static final String ME = "/me";
+        public static final String ID = "/{id}";
         public static final String PRODUCT = ROOT + "/products";
         public static final String CATEGORY = ROOT + "/categories";
         public static final String BRAND = ROOT + "/brands";

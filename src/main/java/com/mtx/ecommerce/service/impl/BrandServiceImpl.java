@@ -1,12 +1,15 @@
 package com.mtx.ecommerce.service.impl;
 
-import com.mtx.ecommerce.dto.request.BrandRegisterDto;
+import com.mtx.ecommerce.dto.request.RegisterBrandDto;
+import com.mtx.ecommerce.dto.request.UpdateBrandDto;
 import com.mtx.ecommerce.dto.response.RegisteredBrandDto;
-import com.mtx.ecommerce.exception.DuplicatedResource;
+import com.mtx.ecommerce.exception.DuplicatedResourceException;
+import com.mtx.ecommerce.exception.ResourceNotFoundException;
 import com.mtx.ecommerce.mapper.BrandMapper;
 import com.mtx.ecommerce.model.Brand;
 import com.mtx.ecommerce.repository.BrandRepository;
 import com.mtx.ecommerce.service.IBrandService;
+import java.util.Objects;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,12 +25,33 @@ public class BrandServiceImpl implements IBrandService {
     private BrandMapper brandMapper;
 
     @Override
-    public RegisteredBrandDto save(BrandRegisterDto dto) {
+    public RegisteredBrandDto save(RegisterBrandDto dto) {
         if (brandRepository.existsByName(dto.getName())) {
-            throw new DuplicatedResource("Already exists brand name");
+            throw new DuplicatedResourceException("Already exists brand name");
         }
         Brand brand = brandMapper.toBrand(dto);
         Brand saved = brandRepository.save(brand);
+        return brandMapper.toRegisteredDto(saved);
+
+    }
+
+    @Override
+    public RegisteredBrandDto update(Long id, UpdateBrandDto dto) {
+        if (!brandRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Brand not found");
+        }
+        if (brandRepository.existsByName(dto.getName())) {
+            Brand brand = brandRepository.findByName(dto.getName()).get();
+            if (!Objects.equals(brand.getId(), id)) {
+                throw new DuplicatedResourceException("Already exists brand name");
+            }
+        }
+        Brand brand = brandRepository.findById(id).get();
+
+        brand = brandMapper.update(dto, brand);
+
+        Brand saved = brandRepository.save(brand);
+
         return brandMapper.toRegisteredDto(saved);
 
     }
