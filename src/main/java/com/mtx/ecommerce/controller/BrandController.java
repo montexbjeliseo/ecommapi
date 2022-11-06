@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,5 +31,10 @@ public class BrandController {
     @PatchMapping(Endpoints.ID)
     public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody UpdateBrandDto dto) {
         return new ResponseEntity<>(brandService.update(id, dto), HttpStatus.OK);
+    }
+    
+    @GetMapping
+    public ResponseEntity<?> getAll(){
+        return new ResponseEntity<>(brandService.getAll(), HttpStatus.OK);
     }
 }

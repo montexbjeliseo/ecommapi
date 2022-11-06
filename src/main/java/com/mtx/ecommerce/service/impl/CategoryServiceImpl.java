@@ -10,6 +10,7 @@ import com.mtx.ecommerce.mapper.CategoryMapper;
 import com.mtx.ecommerce.model.Category;
 import com.mtx.ecommerce.repository.CategoryRepository;
 import com.mtx.ecommerce.service.ICategoryService;
+import java.util.List;
 import java.util.Objects;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public RegisteredCategoryDto update(Long id, UpdateCategoryDto dto) {
 
-        if (dto.getName()==null && dto.getDescription()==null) {
+        if (dto.getName() == null && dto.getDescription() == null) {
             throw new ParameterNotFoundException("No parameters were received!");
         }
 
@@ -58,6 +59,11 @@ public class CategoryServiceImpl implements ICategoryService {
         Category saved = categoryRepository.save(category);
 
         return categoryMapper.toRegisteredDto(saved);
+    }
+
+    @Override
+    public List<RegisteredCategoryDto> getAll() {
+        return categoryMapper.toDtoList(categoryRepository.findAll());
     }
 
 }

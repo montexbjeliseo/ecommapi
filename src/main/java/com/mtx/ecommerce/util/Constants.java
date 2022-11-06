@@ -27,6 +27,7 @@ public class Constants {
         public static final String PRODUCT = ROOT + "/products";
         public static final String CATEGORY = ROOT + "/categories";
         public static final String BRAND = ROOT + "/brands";
+        public static final String SEARCH = "/search";
     }
 
     public static abstract class Tables {
@@ -97,8 +98,15 @@ public class Constants {
     }
 
     public static abstract class CustomQueries {
+        
+        public static final String Q = "q";
+        public static final String PAGE = "page";
+        public static final String PAGE_SIZE = "page_size";
+        public static final int DEFAULT_PAGE = 0;
+        public static final int DEFAULT_PAGE_SIZE = 10;
 
         public static final String EXISTS_DUPLICATED_NAME_BRAND_PRODUCT = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM Product p WHERE (p.name = :name AND p.brand.id = :brand_id)";
         public static final String EXISTS_DUPLICATED_NAME_BRAND_PRODUCT_ID = "SELECT CASE WHEN COUNT(*) > 0 THEN true ELSE false END FROM Product p WHERE NOT(p.id = :id) AND (p.name = :name AND p.brand.id = :brand_id)";
+        public static final String FIN_ALL_PRODUCT_WITH_PARAMS = "SELECT p FROM Product p WHERE (p.name LIKE %:q%) OR (p.description LIKE %:q%) ORDER BY p.name";
     }
 }

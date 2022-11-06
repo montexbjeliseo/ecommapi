@@ -3,6 +3,7 @@ package com.mtx.ecommerce.exception.controller;
 import com.mtx.ecommerce.exception.DuplicatedResourceException;
 import com.mtx.ecommerce.exception.ParameterNotFoundException;
 import com.mtx.ecommerce.exception.ResourceNotFoundException;
+import com.mtx.ecommerce.exception.SearchResultNotFoundException;
 import com.mtx.ecommerce.exception.auth.AlreadyExistsEmailException;
 import com.mtx.ecommerce.exception.dto.ExceptionDto;
 import io.jsonwebtoken.JwtException;
@@ -125,7 +126,7 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
     }
-    
+
     @ExceptionHandler(value = {ResourceNotFoundException.class})
     protected ResponseEntity<?> handleException(ResourceNotFoundException ex,
             WebRequest request) {
@@ -137,7 +138,7 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
-    
+
     @ExceptionHandler(value = {ParameterNotFoundException.class})
     protected ResponseEntity<?> handleException(ParameterNotFoundException ex,
             WebRequest request) {
@@ -149,7 +150,7 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
-    
+
     @ExceptionHandler(value = {DuplicatedResourceException.class})
     protected ResponseEntity<?> handleException(DuplicatedResourceException ex,
             WebRequest request) {
@@ -160,6 +161,18 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
                 request.getDescription(false));
 
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = {SearchResultNotFoundException.class})
+    protected ResponseEntity<?> handleException(SearchResultNotFoundException ex,
+            WebRequest request) {
+        ExceptionDto message = new ExceptionDto(
+                HttpStatus.NO_CONTENT.value(),
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false));
+
+        return new ResponseEntity<>(message, HttpStatus.NO_CONTENT);
     }
 
 }
