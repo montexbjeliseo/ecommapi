@@ -4,6 +4,7 @@ import com.mtx.ecommerce.dto.request.RegisterProductDto;
 import com.mtx.ecommerce.dto.request.UpdateProductDto;
 import com.mtx.ecommerce.service.IProductService;
 import com.mtx.ecommerce.util.Constants.Endpoints;
+import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -36,5 +38,10 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<?> getAll(){
         return new ResponseEntity<>(productService.getAll(), HttpStatus.OK);
+    }
+    
+    @GetMapping(Endpoints.SEARCH)
+    public ResponseEntity<?> search(@RequestParam Map<String, String> params){
+        return new ResponseEntity<>(productService.getSearch(params), HttpStatus.OK);
     }
 }
