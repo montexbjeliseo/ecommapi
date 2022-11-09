@@ -63,7 +63,20 @@ public class BrandServiceImpl implements IBrandService {
 
     }
 
+    @Override
     public List<RegisteredBrandDto> getAll() {
         return brandMapper.toDtoList(brandRepository.findAll());
+    }
+
+    @Override
+    public RegisteredBrandDto delete(Long id) {
+        if (!brandRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Brand not found");
+        }
+        Brand brand = brandRepository.findById(id).get();
+
+        brandRepository.deleteById(id);
+
+        return brandMapper.toRegisteredDto(brand);
     }
 }

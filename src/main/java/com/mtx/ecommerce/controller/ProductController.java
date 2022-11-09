@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,19 +30,24 @@ public class ProductController {
     public ResponseEntity<?> save(@Valid @RequestBody RegisterProductDto dto) {
         return new ResponseEntity<>(productService.save(dto), HttpStatus.OK);
     }
-    
+
     @PatchMapping(Endpoints.ID)
     public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody UpdateProductDto dto) {
         return new ResponseEntity<>(productService.update(id, dto), HttpStatus.OK);
     }
-    
+
     @GetMapping
-    public ResponseEntity<?> getAll(){
+    public ResponseEntity<?> getAll() {
         return new ResponseEntity<>(productService.getAll(), HttpStatus.OK);
     }
-    
+
     @GetMapping(Endpoints.SEARCH)
-    public ResponseEntity<?> search(@RequestParam Map<String, String> params){
+    public ResponseEntity<?> search(@RequestParam Map<String, String> params) {
         return new ResponseEntity<>(productService.getSearch(params), HttpStatus.OK);
+    }
+
+    @DeleteMapping(Endpoints.ID)
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        return new ResponseEntity<>(productService.delete(id), HttpStatus.OK);
     }
 }

@@ -55,6 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PATCH, Endpoints.BRAND).hasAnyAuthority(ADMIN, SELLER)
                 .antMatchers(HttpMethod.PATCH, Endpoints.CATEGORY).hasAnyAuthority(ADMIN, SELLER)
                 .antMatchers(HttpMethod.PATCH, Endpoints.PRODUCT).hasAnyAuthority(ADMIN, SELLER)
+                .antMatchers(HttpMethod.DELETE, Endpoints.BRAND).hasAnyAuthority(ADMIN, SELLER)
+                .antMatchers(HttpMethod.DELETE, Endpoints.CATEGORY).hasAnyAuthority(ADMIN, SELLER)
+                .antMatchers(HttpMethod.DELETE, Endpoints.PRODUCT).hasAnyAuthority(ADMIN, SELLER)
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -97,15 +100,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationEntryPoint authenticationEntryPoint() {
         return new CustomAuthenticationEntryPoint();
     }
-    
+
     @Bean
     @Value("${sendgrid.api.key}")
-    public SendGrid sendGridClient(String sendGridAPIKey){
+    public SendGrid sendGridClient(String sendGridAPIKey) {
         return new SendGrid(sendGridAPIKey);
     }
+
     @Bean
     @Value("${sendgrid.email}")
-    public String sendGridEmail(String email){
+    public String sendGridEmail(String email) {
         return email;
     }
 }

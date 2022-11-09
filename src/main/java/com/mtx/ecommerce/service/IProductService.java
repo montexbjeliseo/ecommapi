@@ -12,8 +12,10 @@ public interface IProductService {
     RegisteredProductDto save(RegisterProductDto dto);
 
     RegisteredProductDto update(Long id, UpdateProductDto dto);
-    
+
     List<RegisteredProductDto> getAll();
-    
+
     ProductSearchResultDto getSearch(Map<String, String> params);
+
+    RegisteredProductDto delete(Long id);
 }

@@ -12,4 +12,7 @@ public interface ICategoryService {
     RegisteredCategoryDto update(Long id, UpdateCategoryDto dto);
     
     List<RegisteredCategoryDto> getAll();
+    
+    RegisteredCategoryDto delete(Long id);
+    
 }

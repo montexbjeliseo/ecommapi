@@ -72,9 +72,6 @@ public class ProductServiceImpl implements IProductService {
             throw new ParameterNotFoundException("No parameters were received!");
         }
 
-        if (dto.getName() == null && dto.getDescription() == null) {
-            throw new ParameterNotFoundException("No parameters were received!");
-        }
         if (!productRepository.existsById(id)) {
             throw new ResourceNotFoundException("Product not found");
         }
@@ -138,6 +135,16 @@ public class ProductServiceImpl implements IProductService {
         }
 
         return new ProductSearchResultDto(q, page, pageSize, list);
+    }
+
+    @Override
+    public RegisteredProductDto delete(Long id) {
+        if (!productRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Product not found");
+        }
+        Product product = productRepository.findById(id).get();
+        productRepository.deleteById(id);
+        return productMapper.toRegistered(product);
     }
 
 }

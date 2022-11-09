@@ -12,4 +12,7 @@ public interface IBrandService {
     RegisteredBrandDto update(Long id, UpdateBrandDto dto);
 
     List<RegisteredBrandDto> getAll();
+    
+    RegisteredBrandDto delete(Long id);
+    
 }

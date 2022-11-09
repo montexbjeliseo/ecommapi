@@ -19,13 +19,13 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 public class CategoryServiceImpl implements ICategoryService {
-
+    
     @Autowired
     private CategoryRepository categoryRepository;
-
+    
     @Autowired
     private CategoryMapper categoryMapper;
-
+    
     @Override
     public RegisteredCategoryDto save(RegisterCategoryDto dto) {
         if (categoryRepository.existsByName(dto.getName())) {
@@ -35,14 +35,14 @@ public class CategoryServiceImpl implements ICategoryService {
         Category saved = categoryRepository.save(category);
         return categoryMapper.toRegisteredDto(saved);
     }
-
+    
     @Override
     public RegisteredCategoryDto update(Long id, UpdateCategoryDto dto) {
-
+        
         if (dto.getName() == null && dto.getDescription() == null) {
             throw new ParameterNotFoundException("No parameters were received!");
         }
-
+        
         if (!categoryRepository.existsById(id)) {
             throw new ResourceNotFoundException("Category not found");
         }
@@ -53,17 +53,27 @@ public class CategoryServiceImpl implements ICategoryService {
             }
         }
         Category category = categoryRepository.findById(id).get();
-
+        
         category = categoryMapper.update(dto, category);
-
+        
         Category saved = categoryRepository.save(category);
-
+        
         return categoryMapper.toRegisteredDto(saved);
     }
-
+    
     @Override
     public List<RegisteredCategoryDto> getAll() {
         return categoryMapper.toDtoList(categoryRepository.findAll());
     }
-
+    
+    @Override
+    public RegisteredCategoryDto delete(Long id) {
+        if (!categoryRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Category not found");
+        }
+        Category category = categoryRepository.findById(id).get();
+        categoryRepository.deleteById(id);
+        return categoryMapper.toRegisteredDto(category);
+    }
+    
 }
