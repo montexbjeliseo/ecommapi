@@ -46,6 +46,5 @@ public class Product {
 
     @OneToMany
     @JoinColumn(name = PRODUCT_ID)
-    //@JsonIgnoreProperties(PRODUCTS)
     private Set<Comment> comments;
 }
