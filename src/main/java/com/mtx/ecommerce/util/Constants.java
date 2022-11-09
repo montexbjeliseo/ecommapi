@@ -55,6 +55,17 @@ public class Constants {
         public static final String ADMIN_EMAIL = "admin@myecommerce.com";
         public static final String USER_EMAIL = "user@myecommerce.com";
         public static final String SELLER_EMAIL = "seller@myecommerce.com";
+        public static final String APPLE = "Apple";
+        public static final String APPLE_DESCRIPTION = "Apple, Inc. es una empresa estadounidense que diseña y produce equipos electrónicos, software y servicios en línea. Tiene su sede principal en el Apple Park, en Cupertino y la sede europea en la ciudad de Cork.";
+        public static final String APPLE_LOGO = "apple.png";
+        public static final String SAMSUNG = "Samsung";
+        public static final String SAMSUNG_DESCRIPTION = "Samsung te ayuda a descubrir una amplia gama de dispositivos electrónicos, incluyendo smartphones, tablets, televisores, electrodomésticos y más.";
+        public static final String SAMSUNG_LOGO = "samsung.png";
+        public static final String CATEGORY_1 = "Celulares y tabletas";
+        public static final String CATEGORY_2 = "Notebooks y televisores";
+        public static final String A13 = "Samsung Galaxy A13";
+        public static final String A13_DESCRIPTION = "Samsung Galaxy A13 4G 128GB";
+        public static final String A13_IMAGE = "a13.png";
     }
 
     public static abstract class Messages {

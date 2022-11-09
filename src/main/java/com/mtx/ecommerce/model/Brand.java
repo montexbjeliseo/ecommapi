@@ -10,11 +10,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = BRANDS)
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class Brand {
 
     @Id

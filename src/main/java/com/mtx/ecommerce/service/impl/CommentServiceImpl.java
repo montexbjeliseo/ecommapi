@@ -11,6 +11,9 @@ import com.mtx.ecommerce.repository.ProductRepository;
 import com.mtx.ecommerce.security.model.User;
 import com.mtx.ecommerce.security.repository.UserRepository;
 import com.mtx.ecommerce.service.ICommentService;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -34,17 +37,36 @@ public class CommentServiceImpl implements ICommentService {
     private UserRepository userRepository;
 
     @Override
-    public RegisteredCommentDto save(Long id, RegisterCommentDto dto) {
-        if (!productRepository.existsById(id)) {
+    public RegisteredCommentDto save(Long product_id, RegisterCommentDto dto) {
+        if (!productRepository.existsById(product_id)) {
             throw new ResourceNotFoundException("Product not found");
         }
-        Product product = productRepository.findById(id).get();
+        Product product = productRepository.findById(product_id).get();
         Comment comment = commentMapper.toComment(dto);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(auth.getName()).get();
         comment.setUser(user);
         comment.setProduct(product);
         Comment saved = commentRepository.save(comment);
+        if (product.getComments() == null) {
+            product.setComments(new HashSet<>());
+        }
+        product.getComments().add(comment);
+        productRepository.save(product);
         return commentMapper.toDto(saved);
     }
+
+    @Override
+    public List<RegisteredCommentDto> getAll(Long product_id) {
+        if (!productRepository.existsById(product_id)) {
+            throw new ResourceNotFoundException("Product not found");
+        }
+        Product product = productRepository.findById(product_id).get();
+        Set<Comment> comments = product.getComments();
+        if (comments.size() < 1) {
+            throw new ResourceNotFoundException("No comments were found");
+        }
+        return commentMapper.toDtoList(comments);
+    }
+
 }
