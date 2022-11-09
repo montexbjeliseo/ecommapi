@@ -28,6 +28,7 @@ public class Constants {
         public static final String CATEGORY = ROOT + "/categories";
         public static final String BRAND = ROOT + "/brands";
         public static final String SEARCH = "/search";
+        public static final String COMMENT = PRODUCT + "/{product_id}/comments";
     }
 
     public static abstract class Tables {
@@ -40,11 +41,13 @@ public class Constants {
         public static final String USER_ID = "user_id";
         public static final String ROLE_ID = "role_id";
         public static final String PRODUCTS = "products";
+        public static final String PRODUCT_ID = "product_id";
         public static final String PRODUCT_IMAGES = "product_images";
         public static final String CATEGORIES = "categories";
         public static final String CATEGORY_ID = "category_id";
         public static final String BRANDS = "brands";
         public static final String BRAND_ID = "brand_id";
+        public static final String COMMENTS = "comments";
     }
 
     public static abstract class DefaultData {
@@ -79,6 +82,7 @@ public class Constants {
         public static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–{}:;',?/*~$^+=<>]).{8,20}$";
         public static final String NAME_PATTERN = "^[a-zA-Z][ a-zA-Z0-9\\+\"]*$";
         public static final String DESCRIPTION_PATTERN = "[ a-zA-Z0-9\\+\\*\\?\\¿\\¡\\!\\.\\\"\\:\\-\\*\\@\\\\\\/\\%\\=\\#\\$\\|\\<\\>\\(\\)\\[\\]\\^\\,\\&\\']*$";
+        public static final String COMMENT_PATTERN = "[ a-zA-Z0-9\\+\\*\\?\\¿\\¡\\!\\.\\\"\\:\\-\\*\\@\\\\\\/\\%\\=\\#\\$\\|\\<\\>\\(\\)\\[\\]\\^\\,\\&\\']*$";
     }
 
     public static abstract class Filter {
@@ -98,7 +102,7 @@ public class Constants {
     }
 
     public static abstract class CustomQueries {
-        
+
         public static final String Q = "q";
         public static final String PAGE = "page";
         public static final String PAGE_SIZE = "page_size";
