@@ -1,6 +1,7 @@
 package com.mtx.ecommerce.controller;
 
 import com.mtx.ecommerce.dto.request.RegisterCommentDto;
+import com.mtx.ecommerce.dto.request.UpdateCommentDto;
 import com.mtx.ecommerce.service.ICommentService;
 import com.mtx.ecommerce.util.Constants.Endpoints;
 import javax.validation.Valid;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,6 +37,11 @@ public class CommentController {
     @DeleteMapping(Endpoints.ID)
     public ResponseEntity<?> delete(@PathVariable Long product_id, @PathVariable Long id) {
         return new ResponseEntity<>(commentService.delete(product_id, id), HttpStatus.OK);
+    }
+
+    @PatchMapping(Endpoints.ID)
+    public ResponseEntity<?> update(@PathVariable Long product_id, @PathVariable Long id, @Valid @RequestBody UpdateCommentDto dto) {
+        return new ResponseEntity<>(commentService.update(product_id, id, dto), HttpStatus.OK);
     }
 
 }
