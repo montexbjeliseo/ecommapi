@@ -9,4 +9,6 @@ public interface ICommentService {
     RegisteredCommentDto save(Long product_id, RegisterCommentDto dto);
 
     List<RegisteredCommentDto> getAll(Long product_id);
+
+    RegisteredCommentDto delete(Long product_id, Long id);
 }

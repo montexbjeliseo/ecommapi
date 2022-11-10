@@ -69,4 +69,20 @@ public class CommentServiceImpl implements ICommentService {
         return commentMapper.toDtoList(comments);
     }
 
+    @Override
+    public RegisteredCommentDto delete(Long product_id, Long id) {
+        if (!productRepository.existsById(product_id)) {
+            throw new ResourceNotFoundException("Product not found");
+        }
+        if (!commentRepository.existsById(id)) {
+            throw new ResourceNotFoundException("No comments were found");
+        }
+        Comment comment = commentRepository.findById(id).get();
+        if (comment.getProduct().getId() != product_id) {
+            throw new ResourceNotFoundException("Comment with " + id + " does not belong to product with " + product_id);
+        }
+        commentRepository.deleteById(id);
+        return commentMapper.toDto(comment);
+    }
+
 }
