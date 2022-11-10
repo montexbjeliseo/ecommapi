@@ -6,6 +6,7 @@ import com.mtx.ecommerce.mapper.SlideMapper;
 import com.mtx.ecommerce.model.Slide;
 import com.mtx.ecommerce.repository.SlideRepository;
 import com.mtx.ecommerce.service.ISlideService;
+import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,11 @@ public class SlideServiceImpl implements ISlideService {
     public RegisteredSlideDto save(RegisterSlideDto dto) {
         Slide saved = slideRepository.save(slideMapper.toSlide(dto));
         return slideMapper.toDto(saved);
+    }
+
+    @Override
+    public List<RegisteredSlideDto> getAll() {
+        return slideMapper.toDtoList(slideRepository.findAll());
     }
 
 }

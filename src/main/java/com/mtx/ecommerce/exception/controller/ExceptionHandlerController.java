@@ -202,16 +202,4 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = {HttpMessageNotReadableException.class})
-    protected ResponseEntity<?> handleException(HttpMessageNotReadableException ex,
-            WebRequest request) {
-        ExceptionDto message = new ExceptionDto(
-                HttpStatus.BAD_REQUEST.value(),
-                new Date(),
-                ex.getMessage(),
-                request.getDescription(false));
-
-        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-    }
-
 }
