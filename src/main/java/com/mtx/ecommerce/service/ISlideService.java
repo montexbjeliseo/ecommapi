@@ -12,4 +12,6 @@ public interface ISlideService {
     List<RegisteredSlideDto> getAll();
 
     RegisteredSlideDto update(Long id, UpdateSlideDto dto);
+
+    RegisteredSlideDto delete(Long id);
 }

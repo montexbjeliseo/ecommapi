@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,5 +37,10 @@ public class SlidesController {
     @PatchMapping(Endpoints.ID)
     public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody UpdateSlideDto dto) {
         return new ResponseEntity<>(slideService.update(id, dto), HttpStatus.OK);
+    }
+
+    @DeleteMapping(Endpoints.ID)
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        return new ResponseEntity<>(slideService.delete(id), HttpStatus.OK);
     }
 }

@@ -46,4 +46,13 @@ public class SlideServiceImpl implements ISlideService {
         return slideMapper.toDto(saved);
     }
 
+    @Override
+    public RegisteredSlideDto delete(Long id) {
+        if (!slideRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Slide not found with id: " + id);
+        }
+        Slide slide = slideRepository.findById(id).get();
+        slideRepository.deleteById(id);
+        return slideMapper.toDto(slide);
+    }
 }
