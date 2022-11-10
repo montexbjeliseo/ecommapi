@@ -10,7 +10,7 @@ import lombok.Setter;
 public class RegisteredSlideDto {
 
     private Long id;
-    private Long alt;
+    private String alt;
     private String image;
     private String link;
 }

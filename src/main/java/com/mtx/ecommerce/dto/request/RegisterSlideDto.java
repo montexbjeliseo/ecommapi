@@ -14,7 +14,7 @@ public class RegisterSlideDto {
 
     @NotBlank
     @Pattern(regexp = Constants.Patterns.SLIDES_ALT_PATTERN)
-    private Long alt;
+    private String alt;
 
     @NotBlank
     private String image;

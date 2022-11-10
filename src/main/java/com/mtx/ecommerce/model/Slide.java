@@ -24,7 +24,7 @@ public class Slide {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long alt;
+    private String alt;
 
     private String image;
 
