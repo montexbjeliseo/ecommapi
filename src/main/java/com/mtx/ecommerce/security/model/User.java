@@ -1,5 +1,6 @@
 package com.mtx.ecommerce.security.model;
 
+import static com.mtx.ecommerce.util.Constants.Roles.ADMIN;
 import static com.mtx.ecommerce.util.Constants.Tables.ROLE_ID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,7 +51,6 @@ public class User implements UserDetails {
 
     private Set<Role> roles = new HashSet<>();
 
-    
     private boolean accountNonExpired = true;
 
     private boolean accountNonLocked = true;
@@ -58,7 +58,7 @@ public class User implements UserDetails {
     private boolean credentialsNonExpired = true;
 
     private boolean enabled = true;
-    
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.getRoles().stream()
@@ -69,6 +69,10 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return this.email;
+    }
+
+    public boolean isAdmin() {
+        return getRoles().stream().anyMatch(role -> role.getName().equals(ADMIN));
     }
 
 }

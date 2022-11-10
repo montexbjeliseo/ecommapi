@@ -5,28 +5,22 @@ import com.mtx.ecommerce.security.dto.request.LoginUserDto;
 import com.mtx.ecommerce.security.dto.request.RegisterUserDto;
 import com.mtx.ecommerce.security.dto.response.RegisteredUserDto;
 import com.mtx.ecommerce.security.dto.response.TokenInfo;
-import com.mtx.ecommerce.security.dto.response.UserInfoDto;
 import com.mtx.ecommerce.security.mapper.UserMapper;
-import com.mtx.ecommerce.security.model.Role;
 import com.mtx.ecommerce.security.model.User;
-import com.mtx.ecommerce.security.repository.RoleRepository;
 import com.mtx.ecommerce.security.repository.UserRepository;
 import com.mtx.ecommerce.security.service.IAuthService;
+import com.mtx.ecommerce.security.service.IAuthUtilsService;
 import com.mtx.ecommerce.security.service.IJwtService;
 import com.mtx.ecommerce.service.IEmailService;
 import com.mtx.ecommerce.util.Constants.Messages.AuthMessages;
-import com.mtx.ecommerce.util.Constants.Roles;
 import com.sendgrid.Response;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -38,9 +32,6 @@ public class AuthServiceImpl implements IAuthService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
 
     @Autowired
     private UserMapper userMapper;
@@ -57,6 +48,9 @@ public class AuthServiceImpl implements IAuthService {
     @Autowired
     private IEmailService emailService;
 
+    @Autowired
+    private IAuthUtilsService authUtilsService;
+
     @Override
     public RegisteredUserDto register(RegisterUserDto dto) throws IOException {
         if (userRepository.existsByEmail(dto.getEmail())) {
@@ -64,7 +58,7 @@ public class AuthServiceImpl implements IAuthService {
         }
         User user = userMapper.toUser(dto);
         user.setPassword(bcrypt.encode(user.getPassword()));
-        user.setRoles(getDefaultRoles());
+        user.setRoles(authUtilsService.getDefaultRoles());
         User saved = userRepository.save(user);
         RegisteredUserDto response = userMapper.toRegisteredDto(saved);
         response.setJwtToken(jwtService.generateToken(saved));
@@ -86,18 +80,5 @@ public class AuthServiceImpl implements IAuthService {
         } catch (BadCredentialsException ex) {
             throw ex;
         }
-    }
-
-    @Override
-    public UserInfoDto userInfo() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(auth.getName()).get();
-        return userMapper.toInfoDto(user);
-    }
-
-    private Set<Role> getDefaultRoles() {
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleRepository.findByName(Roles.USER).get());
-        return roles;
     }
 }
