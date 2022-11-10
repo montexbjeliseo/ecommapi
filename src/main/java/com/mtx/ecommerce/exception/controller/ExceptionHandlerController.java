@@ -1,6 +1,8 @@
 package com.mtx.ecommerce.exception.controller;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.mtx.ecommerce.exception.DuplicatedResourceException;
+import com.mtx.ecommerce.exception.NotOwnResourceException;
 import com.mtx.ecommerce.exception.ParameterNotFoundException;
 import com.mtx.ecommerce.exception.ResourceNotFoundException;
 import com.mtx.ecommerce.exception.SearchResultNotFoundException;
@@ -15,6 +17,7 @@ import javax.servlet.ServletException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -173,6 +176,30 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
                 request.getDescription(false));
 
         return new ResponseEntity<>(message, HttpStatus.NO_CONTENT);
+    }
+
+    @ExceptionHandler(value = {NotOwnResourceException.class})
+    protected ResponseEntity<?> handleException(NotOwnResourceException ex,
+            WebRequest request) {
+        ExceptionDto message = new ExceptionDto(
+                HttpStatus.BAD_REQUEST.value(),
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false));
+
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = {InvalidFormatException.class})
+    protected ResponseEntity<?> handleException(InvalidFormatException ex,
+            WebRequest request) {
+        ExceptionDto message = new ExceptionDto(
+                HttpStatus.BAD_REQUEST.value(),
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false));
+
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
 }
