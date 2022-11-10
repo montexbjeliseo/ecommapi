@@ -29,6 +29,7 @@ public class Constants {
         public static final String BRAND = ROOT + "/brands";
         public static final String SEARCH = "/search";
         public static final String COMMENT = PRODUCT + "/{product_id}/comments";
+        public static final String SLIDE = ROOT + "/slides";
     }
 
     public static abstract class Tables {
@@ -48,6 +49,7 @@ public class Constants {
         public static final String BRANDS = "brands";
         public static final String BRAND_ID = "brand_id";
         public static final String COMMENTS = "comments";
+        public static final String SLIDES = "slides";
     }
 
     public static abstract class DefaultData {
@@ -94,6 +96,8 @@ public class Constants {
         public static final String NAME_PATTERN = "^[a-zA-Z][ a-zA-Z0-9\\+\"]*$";
         public static final String DESCRIPTION_PATTERN = "[ a-zA-Z0-9\\+\\*\\?\\¿\\¡\\!\\.\\\"\\:\\-\\*\\@\\\\\\/\\%\\=\\#\\$\\|\\<\\>\\(\\)\\[\\]\\^\\,\\&\\']*$";
         public static final String COMMENT_PATTERN = "[ a-zA-Z0-9\\+\\*\\?\\¿\\¡\\!\\.\\\"\\:\\-\\*\\@\\\\\\/\\%\\=\\#\\$\\|\\<\\>\\(\\)\\[\\]\\^\\,\\&\\']*$";
+        public static final String SLIDES_ALT_PATTERN = "[ a-zA-Z0-9\\+\\*\\?\\¿\\¡\\!\\.\\\"\\:\\-\\*\\@\\\\\\/\\%\\=\\#\\$\\|\\<\\>\\(\\)\\[\\]\\^\\,\\&\\']*$";
+
     }
 
     public static abstract class Filter {
