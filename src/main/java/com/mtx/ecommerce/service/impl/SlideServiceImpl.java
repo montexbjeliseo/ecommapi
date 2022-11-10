@@ -1,7 +1,9 @@
 package com.mtx.ecommerce.service.impl;
 
 import com.mtx.ecommerce.dto.request.RegisterSlideDto;
+import com.mtx.ecommerce.dto.request.UpdateSlideDto;
 import com.mtx.ecommerce.dto.response.RegisteredSlideDto;
+import com.mtx.ecommerce.exception.ResourceNotFoundException;
 import com.mtx.ecommerce.mapper.SlideMapper;
 import com.mtx.ecommerce.model.Slide;
 import com.mtx.ecommerce.repository.SlideRepository;
@@ -30,6 +32,18 @@ public class SlideServiceImpl implements ISlideService {
     @Override
     public List<RegisteredSlideDto> getAll() {
         return slideMapper.toDtoList(slideRepository.findAll());
+    }
+
+    @Override
+    public RegisteredSlideDto update(Long id, UpdateSlideDto dto) {
+
+        if (!slideRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Slide not found with id: " + id);
+        }
+        Slide slide = slideRepository.findById(id).get();
+        slide = slideMapper.update(dto, slide);
+        Slide saved = slideRepository.save(slide);
+        return slideMapper.toDto(saved);
     }
 
 }
